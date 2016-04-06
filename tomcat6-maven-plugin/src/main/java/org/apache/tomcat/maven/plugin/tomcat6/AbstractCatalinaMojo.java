@@ -20,9 +20,11 @@ package org.apache.tomcat.maven.plugin.tomcat6;
  */
 
 import org.apache.maven.artifact.manager.WagonManager;
+import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.settings.Proxy;
 import org.apache.maven.wagon.authentication.AuthenticationInfo;
 import org.apache.tomcat.maven.common.deployer.TomcatManager;
 import org.apache.tomcat.maven.common.deployer.TomcatManagerException;
@@ -71,6 +73,12 @@ public abstract class AbstractCatalinaMojo
     private WagonManager wagonManager;
 
     /**
+     * The current build session instance. This is used for plugin manager API calls.
+     */
+    @Component
+    private MavenSession session;
+
+    /**
      * The full URL of the Tomcat manager instance to use.
      */
     @Parameter( property = "maven.tomcat.url", defaultValue = "http://localhost:8080/manager", required = true )
@@ -108,6 +116,14 @@ public abstract class AbstractCatalinaMojo
     @Parameter( property = "plugin.version", required = true, readonly = true )
     private String version;
 
+    /**
+     * Skip the execution.
+     *
+     * @since 2.3
+     */
+    @Parameter( property = "maven.tomcat.skip", defaultValue = "false" )
+    private boolean skip;
+
     // ----------------------------------------------------------------------
     // Fields
     // ----------------------------------------------------------------------
@@ -127,6 +143,12 @@ public abstract class AbstractCatalinaMojo
     public void execute()
         throws MojoExecutionException
     {
+        if ( this.skip )
+        {
+            getLog().info( "skip execution" );
+            return;
+        }
+
         try
         {
             invokeManager();
@@ -216,6 +238,13 @@ public abstract class AbstractCatalinaMojo
 
             manager = new TomcatManager( url, userName, password, charset, settings.isInteractiveMode() );
             manager.setUserAgent( name + "/" + version );
+
+            Proxy proxy = session.getSettings().getActiveProxy();
+            if ( proxy != null && proxy.isActive() )
+            {
+                getLog().debug( "proxy: " + proxy.getHost() + ":" + proxy.getPort() );
+                manager.setProxy( proxy );
+            }
         }
 
         return manager;

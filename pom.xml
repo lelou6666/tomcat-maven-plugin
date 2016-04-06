@@ -48,7 +48,11 @@
     <mavenPluginPluginVersion>3.2</mavenPluginPluginVersion>
     <!-- Test settings -->
     <maven.test.redirectTestOutputToFile>false</maven.test.redirectTestOutputToFile>
+<<<<<<< HEAD
     <surefire.version>2.18.1</surefire.version>
+=======
+    <surefire.version>2.18</surefire.version>
+>>>>>>> refs/remotes/apache/trunk
     <failsafe.version>${surefire.version}</failsafe.version>
 
     <junit.version>4.10</junit.version>
@@ -73,8 +77,12 @@
     <its.ajp.port>2001</its.ajp.port>
     <!-- server port for it tests -->
     <its.server.port>2008</its.server.port>
+<<<<<<< HEAD
     <tomcat7Version>7.0.54</tomcat7Version>
     <tomcat8Version>8.0.14</tomcat8Version>
+=======
+    <tomcat7Version>7.0.59</tomcat7Version>
+>>>>>>> refs/remotes/apache/trunk
 
     <!-- to prevent isssues with last apache parent pom -->
     <arguments />
@@ -184,10 +192,26 @@
       <name>Sylvain Guillope</name>
     </contributor>
     <contributor>
+<<<<<<< HEAD
       <name>Xavier Dury</name>
     </contributor>
     <contributor>
       <name>Rupert Madden-Abbott</name>
+=======
+      <name>Dennis Lundberg</name>
+    </contributor>
+    <contributor>
+      <name>Nicholas Albion</name>
+    </contributor>
+    <contributor>
+      <name>Joshua Chaitin-Pollak</name>
+    </contributor>
+    <contributor>
+      <name>Andrey Utkin</name>
+    </contributor>
+    <contributor>
+      <name>John Gregg</name>
+>>>>>>> refs/remotes/apache/trunk
     </contributor>
   </contributors>
 
@@ -319,7 +343,7 @@
       <dependency>
         <groupId>org.eclipse.jdt.core.compiler</groupId>
         <artifactId>ecj</artifactId>
-        <version>4.3.1</version>
+        <version>4.4</version>
       </dependency>
 
       <dependency>
@@ -758,7 +782,7 @@
         <plugin>
           <groupId>org.apache.rat</groupId>
           <artifactId>apache-rat-plugin</artifactId>
-          <version>0.10</version>
+          <version>0.11</version>
           <configuration>
             <excludes>
               <exclude>.gitignore</exclude>
